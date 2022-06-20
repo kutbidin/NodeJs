@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+     <div class="container">
+         <br>
+         <div class="jumbotron">
+             <h1 class="display-4"> Send Message</h1>
+             <br>
+             <input id="id" class="form-control" placeholder="customer id">
+             <br>
+             <input id="name" class="form-control" placeholder="customer name">
+             <br>
+             <input id="surname" class="form-control" placeholder="customer surName">
+             <br>
+             <button id="load" class="btn btn-success" >Load Customers</button>
+             <button id="save" class="btn btn-success" >Add Customer</button>
+         </div>
+         <div class="cotent bg-light p-3" id="feedback" ></div>
+         <div id="customers" ></div>
+     </div>
+     <script>
+         //client side code here
+         $(()=>{
+             $('#load').click(()=>
+               {
+                 getCustomers();
+               });
+             $('#save').click(()=>
+             {
+               saveCustomer(
+                  {
+                   id:$('#id').val(),
+                   name:$('#name').val(),
+                   surname:$('#surname').val()
+                  }
+               );        
+               getCustomers();
+              });            
+         });
+         function addCustomer(customer){          
+             $('#customers').append(`
+             <h4> ID: ${customer.id} </h4>
+             <p><span > Name: ${customer.name} </span> <button id="${customer.id}" class="btn btn-warning" onClick="deleteCustomer(this.id)">Delete Customer</button></p>
+             <h4> SurName: ${customer.surname} </h4>  
+             <hr class='bg-dark' /><br>           
+             `);
+         }
+         function getCustomers(){
+           $.get('http://localhost:3000/customers',(data)=>{
+               $('#customers').empty();
+               data.forEach(addCustomer);                
+               });
+        }   
+        function saveCustomer(customer){
+            $.post('http://localhost:3000/customers',customer);
+        } 
+        function deleteCustomer(id){
+           // alert(id);
+            $.ajax({
+                url:'http://localhost:3000',
+                type:'put',
+                data:{id},
+                success:function(result){
+                  $('#feedback').empty();
+                  $('#feedback').append(result);
+                  //console.log(result);
+                }
+                 ,
+                 error:function(request,msg,error){
+                    $('#feedback').empty();
+                    $('#feedback').append(`error :${error}`);      
+                }
+            });
+        }     
+     </script>
+    </body>
+</html>

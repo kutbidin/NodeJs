@@ -1,0 +1,30 @@
+{
+  "name": "dostapp",
+  "version": "1.0.0",
+  "description": "chat application",
+  "main": "index.js",
+  "scripts": {
+    "test": "no test yet",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kutbidin/node.git"
+  },
+  "keywords": [
+    "chat",
+    "app"
+  ],
+  "author": "aziz turan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kutbidin/node/issues"
+  },
+  "homepage": "https://github.com/kutbidin/node#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.3",
+    "nodemon": "^2.0.16"
+  }
+}
