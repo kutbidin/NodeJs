@@ -45,6 +45,7 @@ const printCalendar=(year,mon=0)=>{
     }
     printCalMonth(year,mon,writer);    
 }
+// you can print the whole year or the given month only
 //printCalendar(2022,02);
 printCalendar(2022);
 
